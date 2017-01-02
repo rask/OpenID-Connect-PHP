@@ -4,8 +4,9 @@
  *
  * Copyright MITRE 2012
  *
- * OpenIDConnectClient for PHP5
- * Author: Michael Jett <mjett@mitre.org>
+ * OpenIDConnectClient for PHP7
+ * Original author: Michael Jett <mjett@mitre.org>
+ * Work appended by: Otto Rask <ojrask@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -21,11 +22,13 @@
  *
  */
 
-require "../../autoload.php";
+require_once(__DIR__ . '/vendor/autoload.php');
 
-$oidc = new OpenIDConnectClient('http://myproviderURL.com/',
-                                'ClientIDHere',
-                                'ClientSecretHere');
+$oidc = new \OpenIdConnectClient\OpenIdConnectClient(
+        'http://myproviderURL.com/',
+        'ClientIDHere',
+        'ClientSecretHere'
+    );
 
 $oidc->authenticate();
 $name = $oidc->requestUserInfo('given_name');
