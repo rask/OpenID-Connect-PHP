@@ -24,11 +24,11 @@
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$oidc = new \OpenIdConnectClient\OpenIdConnectClient(
-        'http://myproviderURL.com/',
-        'ClientIDHere',
-        'ClientSecretHere'
-    );
+$oidc = new \OpenIdConnectClient\OpenIdConnectClient([
+        'provider_url' => 'http://myproviderURL.com/',
+        'client_id' => 'ClientIDHere',
+        'client_secret' => 'ClientSecretHere'
+    ]);
 
 $oidc->authenticate();
 $name = $oidc->requestUserInfo('given_name');

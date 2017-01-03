@@ -52,9 +52,11 @@ require '/vendor/autoload.php';
 
 use OpenIdConnectClient\OpenIdConnectClient;
 
-$oidc = new OpenIDConnectClient('https://id.provider.com/',
-                                'ClientIDHere',
-                                'ClientSecretHere');
+$oidc = new OpenIDConnectClient([
+        'provider_url' => 'https://id.provider.com/',
+        'client_id' => 'ClientIDHere',
+        'client_secret' => 'ClientSecretHere'
+    ]);
 
 $oidc->authenticate();
 $name = $oidc->requestUserInfo('given_name');
@@ -69,7 +71,9 @@ $name = $oidc->requestUserInfo('given_name');
 
 use OpenIdConnectClient\OpenIdConnectClient;
 
-$oidc = new OpenIDConnectClient("https://id.provider.com/");
+$oidc = new OpenIDConnectClient([
+        'provider_url' => 'https://id.provider.com/'
+    ]);
 
 $oidc->register();
 $client_id = $oidc->getClientID();
@@ -98,9 +102,11 @@ $oidc->setCertPath('/path/to/my.cert');
 
 use OpenIdConnectClient\OpenIdConnectClient;
 
-$oidc = new OpenIDConnectClient('https://id.provider.com/',
-                                'ClientIDHere',
-                                'ClientSecretHere');
+$oidc = new OpenIDConnectClient([
+        'provider_url' => 'https://id.provider.com/',
+        'client_id' => 'ClientIDHere',
+        'client_secret' => 'ClientSecretHere'
+    ]);
 
 $oidc->providerConfigParam([
     'token_endpoint' => 'https://id.provider.com/connect/token'
@@ -111,7 +117,6 @@ $oidc->addScope('my_scope');
 // This assumes success (to validate check if the access_token
 // property is there and a valid JWT):
 $clientCredentialsToken = $oidc->requestClientCredentialsToken()->access_token;
-
 ```
 
 ### Todo
