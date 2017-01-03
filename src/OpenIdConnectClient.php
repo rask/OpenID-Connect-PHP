@@ -288,7 +288,7 @@ class OpenIdConnectClient
         $token_json = $this->requestTokens($code);
 
         if (!$token_json) {
-            throw new \OpenIDConnectClientException('Unknown error, could not reach OpenID provider');
+            throw new OpenIdConnectException('Unknown error, could not reach OpenID provider');
         }
 
         // Throw an error if the server returns one
@@ -837,7 +837,7 @@ class OpenIdConnectClient
     protected function verifyJwtClaims(\stdClass $claims, $accessToken = null) : bool
     {
         $expected_at_hash = isset($claims->at_hash) && isset($accessToken)
-            ? $this->getJwtClaimsAtHashForAccessToken($claims, $accessToken)
+            ? $this->getJwtClaimsAtHashForAccessToken($accessToken)
             : '';
 
         $provider_match = $claims->iss === $this->getProviderUrl();
@@ -856,12 +856,11 @@ class OpenIdConnectClient
      *
      * @access protected
      *
-     * @param object $claims
      * @param string $accessToken
      *
      * @return string
      */
-    protected function getJwtClaimsAtHashForAccessToken(object $claims, string $accessToken) : string
+    protected function getJwtClaimsAtHashForAccessToken(string $accessToken) : string
     {
         $access_token_header = $this->getAccessTokenHeader();
         $access_token_header_alg = isset($access_token_header->alg)
@@ -893,8 +892,8 @@ class OpenIdConnectClient
     protected function base64EncodeUrl(string $str) : string
     {
         $enc = base64_encode($str);
-        $enc = rtrim($enc, "=");
-        $enc = strtr($enc, "+/", "-_");
+        $enc = rtrim($enc, '=');
+        $enc = strtr($enc, '+/', '-_');
 
         return $enc;
     }
