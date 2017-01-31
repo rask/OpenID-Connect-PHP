@@ -317,7 +317,7 @@ class OpenIdConnectClient
         // Verify the signature
         if ($this->canVerifySignatures() && !$this->verifyJwtSignature($token_json->id_token)) {
             throw new OpenIdConnectException('Unable to verify signature');
-        } else {
+        } elseif (!$this->canVerifySignatures() && !$this->verifyJwtSignature($token_json->id_token)) {
             user_error('Warning: JWT signature verification unavailable.');
         }
 
