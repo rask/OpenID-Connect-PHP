@@ -1304,7 +1304,9 @@ class OpenIdConnectClient
      */
     protected function getNonce() : string
     {
-        return $_SESSION['openid_connect_nonce'];
+        return isset($_SESSION['openid_connect_nonce'])
+            ? $_SESSION['openid_connect_nonce']
+            : '';
     }
 
     /**
@@ -1338,7 +1340,9 @@ class OpenIdConnectClient
      */
     protected function getState() : string
     {
-        return $_SESSION['openid_connect_state'];
+        return isset($_SESSION['openid_connect_state'])
+            ? $_SESSION['openid_connect_state']
+            : '';
     }
 
     /**
