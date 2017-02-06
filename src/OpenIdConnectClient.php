@@ -372,7 +372,7 @@ class OpenIdConnectClient
             $signout_params['post_logout_redirect_uri'] = $redirect;
         }
 
-        $signout_endpoint .= '?' . http_build_query($signout_params, null, '&');
+        $signout_endpoint .= '?' . http_build_query($signout_params, '', '&');
 
         $this->redirect($signout_endpoint);
     }
@@ -588,7 +588,7 @@ class OpenIdConnectClient
             ]);
         }
 
-        $auth_endpoint .= '?' . http_build_query($auth_params, null, '&');
+        $auth_endpoint .= '?' . http_build_query($auth_params, '', '&');
 
         session_commit();
 
@@ -613,7 +613,7 @@ class OpenIdConnectClient
             'scope' => implode(' ', $this->scopes)
         ];
 
-        $post_params = http_build_query($post_data, null, '&');
+        $post_params = http_build_query($post_data, '', '&');
 
         return json_decode($this->fetchUrl($token_endpoint, $post_params, $headers));
     }
@@ -678,7 +678,7 @@ class OpenIdConnectClient
         ];
 
         // Convert token params to string format
-        $token_params = http_build_query($token_params, null, '&');
+        $token_params = http_build_query($token_params, '', '&');
 
         $json = json_decode($this->fetchUrl($token_endpoint, $token_params));
         $this->refreshToken = $json->refresh_token;
@@ -1304,7 +1304,9 @@ class OpenIdConnectClient
      */
     protected function getNonce() : string
     {
-        return $_SESSION['openid_connect_nonce'];
+        return isset($_SESSION['openid_connect_nonce'])
+            ? $_SESSION['openid_connect_nonce']
+            : '';
     }
 
     /**
@@ -1338,7 +1340,9 @@ class OpenIdConnectClient
      */
     protected function getState() : string
     {
-        return $_SESSION['openid_connect_state'];
+        return isset($_SESSION['openid_connect_state'])
+            ? $_SESSION['openid_connect_state']
+            : '';
     }
 
     /**
