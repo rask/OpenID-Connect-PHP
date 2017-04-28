@@ -572,8 +572,7 @@ class OpenIdConnectClient
             'redirect_uri' => $this->getRedirectUrl(),
             'client_id' => $this->clientId,
             'nonce' => $nonce,
-            'state' => $state,
-            'scope' => 'openid'
+            'state' => $state
         ]);
 
         // If the client has been registered with additional scopes
